@@ -44,7 +44,7 @@ func getTwilioClient() (*gotwilio.Twilio, TwilioConfiguration) {
 
 func (r *reminderBot) Post(p *reddit.Post) error {
 	fmt.Printf("watching post by [%s] -- [%s] @ \n[%s]\n\n", p.Author, p.Title, p.URL)
-	if (strings.Contains(p.Title, "Tokyo") && strings.Contains(p.Title, "60")) || strings.Contains(p.Title, "Tokyo60") || true {
+	if (strings.Contains(p.Title, "Tokyo") && strings.Contains(p.Title, "60")) || strings.Contains(p.Title, "Tokyo60") {
 		fmt.Printf("notifying of match at: %s", p.URL)
 
 		twilio, conf := getTwilioClient()
