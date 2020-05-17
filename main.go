@@ -52,11 +52,6 @@ func (r *reminderBot) Post(p *reddit.Post) error {
 		twilio.SendSMS(conf.FromPhone, conf.ToPhone, fmt.Sprintf("Monitored message from [%s] - [%s]: %s", p.Author, p.Title, p.URL), "", "")
 
 		<-time.After(10 * time.Second)
-		return r.bot.SendMessage(
-			p.Author,
-			fmt.Sprintf("Notification: %s", p.Title),
-			fmt.Sprintf("Tokyo60: %s", p.URL),
-		)
 	}
 	return nil
 }
