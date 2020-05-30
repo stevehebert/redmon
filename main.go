@@ -7,6 +7,8 @@ import (
 	"strings"
 	"time"
 
+	"github.com/stevehebert/redmon/parser"
+
 	"github.com/BurntSushi/toml"
 	"github.com/sfreiberg/gotwilio"
 	"github.com/turnage/graw"
@@ -43,15 +45,24 @@ func getTwilioClient() (*gotwilio.Twilio, TwilioConfiguration) {
 }
 
 func (r *reminderBot) Post(p *reddit.Post) error {
-	fmt.Printf("watching post by [%s] -- [%s] @ \n[%s]\n\n", p.Author, p.Title, p.URL)
-	if (strings.Contains(p.Title, "Tokyo") && strings.Contains(p.Title, "60")) || strings.Contains(p.Title, "Tokyo60") {
-		fmt.Printf("notifying of match at: %s", p.URL)
+
+	msg, err := parser.Parse(p.Title)
+
+	if err != nil {
+		fmt.Printf("post spiked unable to parse by [%s] -- [%s] @ \n[%s]\n\n", p.Author, p.Title, p.URL)
+		return nil
+	}
+
+	if (strings.Contains(msg.Have, "Tokyo") && strings.Contains(msg.Have, "60")) || strings.Contains(msg.Have, "Tokyo60") {
+		fmt.Printf("notifying of match at: %s\n", p.URL)
 
 		twilio, conf := getTwilioClient()
 
 		twilio.SendSMS(conf.FromPhone, conf.ToPhone, fmt.Sprintf("Monitored message from [%s] - [%s]: %s", p.Author, p.Title, p.URL), "", "")
 
 		<-time.After(10 * time.Second)
+	} else {
+		fmt.Printf("message %+v scanned and missed: %s", msg, p.Title)
 	}
 	return nil
 }

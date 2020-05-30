@@ -6,20 +6,20 @@ import (
 	"strings"
 )
 
-type marketMessage struct {
-	location string
-	have     string
-	want     string
+type MarketMessage struct {
+	Location string
+	Have     string
+	Want     string
 }
 
-func parseMessage(rawMessage string) (*marketMessage, error) {
+func parseMessage(rawMessage string) (*MarketMessage, error) {
 
 	_, _, err := separate(rawMessage, "[H]")
 
 	return nil, err
 }
 
-func Parse(message string) (*marketMessage, error) {
+func Parse(message string) (*MarketMessage, error) {
 	left, have, error := separate(message, "[H]")
 	fmt.Print("-->" + left + "<--")
 
@@ -45,14 +45,14 @@ func Parse(message string) (*marketMessage, error) {
 			return nil, errors.New("location is undefined")
 		}
 
-		return &marketMessage{location: location, have: have, want: want}, nil
+		return &MarketMessage{Location: location, Have: have, Want: want}, nil
 	}
 
 	if left == "" {
 		return nil, errors.New("location is undefined")
 	}
 
-	return &marketMessage{location: left, have: have1, want: want}, nil
+	return &MarketMessage{Location: left, Have: have1, Want: want}, nil
 }
 
 func separate(search string, separator string) (string, string, error) {
