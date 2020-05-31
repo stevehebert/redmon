@@ -2,7 +2,6 @@ package parser
 
 import (
 	"errors"
-	"fmt"
 	"strings"
 )
 
@@ -21,7 +20,6 @@ func parseMessage(rawMessage string) (*MarketMessage, error) {
 
 func Parse(message string) (*MarketMessage, error) {
 	left, have, error := separate(message, "[H]")
-	fmt.Print("-->" + left + "<--")
 
 	if error != nil {
 		return nil, errors.New("unable to locate [HAVE] portion of message")

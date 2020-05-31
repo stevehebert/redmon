@@ -62,7 +62,7 @@ func (r *reminderBot) Post(p *reddit.Post) error {
 
 		<-time.After(10 * time.Second)
 	} else {
-		fmt.Printf("message %+v scanned and missed: %s", msg, p.Title)
+		fmt.Printf("message %+v scanned and missed: %s\n", msg, p.Title)
 	}
 	return nil
 }
