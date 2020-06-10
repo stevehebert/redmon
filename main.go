@@ -53,7 +53,7 @@ func (r *reminderBot) Post(p *reddit.Post) error {
 		return nil
 	}
 
-	if (strings.Contains(msg.Have, "Tokyo") && strings.Contains(msg.Have, "60")) || strings.Contains(msg.Have, "Tokyo60") {
+	if (strings.Contains(msg.Have, "GMK") && strings.Contains(msg.Have, "Dots")) || strings.Contains(msg.Have, "GMK Dots") {
 		fmt.Printf("notifying of match at: %s\n", p.URL)
 
 		twilio, conf := getTwilioClient()
